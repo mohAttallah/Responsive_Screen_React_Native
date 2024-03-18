@@ -4,8 +4,8 @@ import Svg, { Circle } from 'react-native-svg';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function Details() {
-    const progressPercentage = 20; // Set the progress percentage here
-    const radius = 40;
+    const progressPercentage = 80; // Set the progress percentage here
+    const radius = 30;
     const circumference = 2 * Math.PI * radius;
     const progressStrokeDashoffset = ((100 - progressPercentage) / 100) * circumference;
 
@@ -30,10 +30,9 @@ export default function Details() {
                     strokeDasharray={`${circumference} ${circumference}`}
                     strokeDashoffset={progressStrokeDashoffset}
                     strokeLinecap="round"
-                    transform="rotate(-90 50 50)"
+                    transform="rotate(25 50 50)"
                 />
             </Svg>
-            <Text style={styles.progressText}>{progressPercentage}%</Text>
         </View>
     );
 }

@@ -5,9 +5,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import HomeScreen from './screens/Home';
 import DetailsScreen from './screens/Details';
+import PokemonScreen from './screens/Pokemon';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { Provider } from 'react-redux';
+import store from './redux/store';
 export default function App() {
   const Stack = createStackNavigator();
   const [appIsReady, setAppIsReady] = useState(false);
@@ -15,21 +17,14 @@ export default function App() {
   useEffect(() => {
     async function prepare() {
       try {
-        // Keep the splash screen visible while we fetch resources
         await SplashScreen.preventAutoHideAsync();
 
-        // Pre-load fonts, make any API calls you need to do here
         await Font.loadAsync(Entypo.font);
-
-        // Artificially delay for two seconds to simulate a slow loading
-        // experience. Please remove this if you copy and paste the code!
         await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
-        // Hide the splash screen regardless of errors
         await SplashScreen.hideAsync();
-        // Tell the application to render
         setAppIsReady(true);
       }
     }
@@ -46,11 +41,15 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+          <Stack.Screen name="Pokemon" component={PokemonScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }

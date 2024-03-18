@@ -15,19 +15,28 @@ export default function App() {
                 </Text>
             </View>
             <View style={styles.main}>
-                <View style={styles.section1}>
 
 
-                    <Text> Home Page dd</Text >
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate('Details') }}
-                    >
-                        <Text> Click Me</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.section2}>
 
-                </View>
+
+                <TouchableOpacity
+                    style={styles.section1}
+                    onPress={() => { navigation.navigate('Details') }}
+                >
+                    <Text> Details Page</Text >
+                    <Text> Click Me</Text>
+                </TouchableOpacity>
+
+
+
+                <TouchableOpacity
+                    style={styles.section2}
+                    onPress={() => { navigation.navigate('Pokemon') }}
+                >
+                    <Text> Pokemon Page</Text >
+                    <Text> Click Me</Text>
+                </TouchableOpacity>
+
             </View>
             <View style={styles.footer}>
 
@@ -69,6 +78,7 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
     },
     footer: {
         flex: 1,
