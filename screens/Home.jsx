@@ -36,11 +36,12 @@ export default function App() {
                     <Text> Pokemon Page</Text >
                     <Text> Click Me</Text>
                 </TouchableOpacity>
-
             </View>
-            <View style={styles.footer}>
-
-            </View>
+            <TouchableOpacity style={styles.footer}
+                onPress={() => { navigation.navigate('Player') }}>
+                <Text> Player page</Text >
+                <Text> Click Me</Text>
+            </TouchableOpacity>
 
         </SafeAreaView>
     );
