@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, TouchableOpacity, TouchableWithoutFeedback, Text } from 'react-native';
 import { Video } from 'expo-av';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Slider from '@react-native-community/slider';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function Player() {
     const videoRef = useRef(null);
@@ -14,6 +16,7 @@ export default function Player() {
     const [status, setStatus] = React.useState({});
     const [opacity, setOpacity] = useState(1);
     const [volume, setVolume] = useState(1);
+    const [fullScreen, setFullScreen] = useState(false);
 
     useEffect(() => {
         setVideoProgress(status.durationMillis);
@@ -62,13 +65,20 @@ export default function Player() {
         return `${minutes}:${secondsFormatted < 10 ? '0' : ''}${secondsFormatted}`;
     };
 
+    const handleResizeScreen = async () => {
+        setFullScreen(!fullScreen);
+        if (fullScreen) {
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        } else {
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        }
+    }
 
 
     return (
         <SafeAreaView style={styles.container}>
 
-            {showOverlay && <View style={styles.overLay} />}
-
+            {showOverlay && <View style={[styles.overLay, { height: fullScreen ? "100%" : "35%" }]} />}
             <TouchableWithoutFeedback onPress={handlePressShowActions}>
                 <Video
                     ref={videoRef}
@@ -78,9 +88,8 @@ export default function Player() {
                     isMuted={false}
                     resizeMode="cover"
                     onPlaybackStatusUpdate={status => setStatus(() => status)}
-
                     isLooping
-                    style={{ width: "100%", height: "35%" }}
+                    style={{ width: "100%", height: fullScreen ? '100%' : "35%" }}
                     progressUpdateIntervalMillis={1000}
                 />
             </TouchableWithoutFeedback>
@@ -95,6 +104,9 @@ export default function Player() {
                     onValueChange={handleSliderChange}
                 />
                 <Text>{formatTime(videoDuration / 1000)}</Text>
+                <TouchableOpacity onPress={handleResizeScreen}>
+                    <Entypo name="resize-full-screen" size={24} color="#000000" />
+                </TouchableOpacity>
             </View>
 
             {showOverlay &&
@@ -119,7 +131,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         backgroundColor: "rgba(0,0,0,0.5)",
         width: "100%",
-        height: "35%",
+
         zIndex: 1,
     },
     actions: {
