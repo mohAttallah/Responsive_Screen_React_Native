@@ -38,7 +38,7 @@ export default function App() {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.footer}
-                onPress={() => { navigation.navigate('Player') }}>
+                onPress={() => { navigation.navigate('MainPlayer') }}>
                 <Text> Player page</Text >
                 <Text> Click Me</Text>
             </TouchableOpacity>
